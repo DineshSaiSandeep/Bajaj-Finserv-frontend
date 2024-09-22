@@ -4,7 +4,7 @@ import "./App.css";
 
 function App() {
   const [input, setInput] = useState(
-    '{"data":["M","1","334","4","B","a","C","c"]}'
+    '{"data":["M","1","334","4","B","a","C","c"], \n "file_b64": "data:text/plain;base64,SGVsbG8sIHRoaXMgaXMgYSBzYW1wbGUgdGV4dCBmaWxlIGZvciB0ZXN0aW5nIGJhc2U2NC1lbmNvZGVkIGZpbGUgdXBsb2Fkcy4KCklmIHlvdSBjYW4gcmVhZCB0aGlzLCB0aGUgZGVjb2RpbmcgaGFzIHdvcmtlZCBjb3JyZWN0bHkhCgpIYXZlIGEgZ3JlYXQgZGF5IQ=="}'
   );
   const [response, setResponse] = useState(null);
   const [error, setError] = useState("");
@@ -61,6 +61,20 @@ function App() {
             <p>{response.highest_lowercase_alphabet.join(", ")}</p>
           </div>
         )}
+        {selectedFilters.includes("file_information") && (
+          <div>
+            <h3>File Information:</h3>
+            {response.file_valid ? (
+              <>
+                <p>File Valid: Yes</p>
+                <p>File MIME Type: {response.file_mime_type}</p>
+                <p>File Size: {response.file_size_kb} KB</p>
+              </>
+            ) : (
+              <p>No file information available</p>
+            )}
+          </div>
+        )}
       </div>
     );
   };
@@ -92,6 +106,7 @@ function App() {
                 <option value="highest_lowercase_alphabet">
                   Highest Lowercase Alphabet
                 </option>
+                <option value="file_information">File Information</option>
               </select>
               <div className="selected-filters">
                 {selectedFilters.map((filter) => (
